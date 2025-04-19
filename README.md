@@ -1,45 +1,44 @@
 # GraphShiny
 
-The flow of clinical trials data can quickly become complicated. The dashboard presented can help programmers and project managers understand the data flow and quickly catch discrepancies
+Clinical‑trial data pipelines can become labyrinthine. **GraphShiny** simplifies oversight by visualising dataset lineage and flagging discrepancies before they become costly.
 
-<img  width="885" height="655" src="https://github.com/mbalcerzak/GraphShiny/blob/master/img/clinical_graph.gif">
+<img  width="885" height="655" src="https://github.com/JoshAdekeye/RShiny-Projects/blob/master/img/clinical_graph.gif">
 
+### Key Benefits
 
-**The dashboard can help with:**
-- visually exploring dataset connections  
-- ensuring that all main/QC programmers get notified if the underlying dataset changes  
-- making sure all raw datasets are necessary and used on the study  
-- checking if the actual data flow is in accordance with specification and industry/company standards
-- comparing inputs between main and QC programs  
-- making sure w![Picture1](https://github.com/user-attachments/assets/34808b7c-f928-4ab4-9954-e14374b0f35c)
-e have all the datasets necessary to create each domain
-  
+- **Interactive lineage map** – explore how raw, SDTM and ADaM datasets connect at a glance  
+- **Change notifications** – automatically alert main/QC programmers when an upstream dataset is updated  
+- **Necessity check** – verify that every raw dataset present is actually required for the study  
+- **Standards compliance** – validate that observed data flow matches specifications and industry or company conventions  
+- **Main vs QC comparison** – compare inputs referenced by main and QC programs side‑by‑side  
+- **Domain readiness** – confirm that all prerequisite datasets exist for each derived domain  
 
-## How it is built
+## How It Works
 
-1. Program **create_graph_input.R** checks SAS programs using regular expressions (REGEX). Program looks for mentions of "RAW", "SDTM" and "ADAM" to create a list of all datasets used while creating the program.
-2. It outputs two dataframes:
-    * one with **nodes** (unique list of all the datasets names found)
-    * one with **edges** (connections between the datasets e.g. RAW.DM --> SDTM.DM ...)
-3. For the purpose of this repository I am masking the data using a Python script (**masking.py**)
-4. R Shiny script reads in te two datasets and creates a graph using visNetwork library
-5. The user can:
-    * filter the dataset if he/she wants to see only a specific dataset
-    * download the filtered (or not) dataset with edges
+1. **create_graph_input.R** scans SAS programs with regular expressions, searching for references to the *RAW*, *SDTM* and *ADaM* layers.  
+2. The script produces two outputs:  
+   * **nodes** – a unique list of all dataset names discovered  
+   * **edges** – directional links, e.g. `RAW.DM → SDTM.DM`  
+3. Sensitive identifiers are anonymised for this public repo via **masking.py**.  
+4. The Shiny app ingests the two tables and renders an interactive network using **visNetwork**.  
+5. Inside the app users can:  
+   * Filter the graph to focus on specific datasets  
+   * Download the complete or filtered edge list as CSV  
 
-## Graph showing connections between all the datasets
+## Live Screenshots
 
-While the app is starting the graph shows all the datasets in the input data
+### Complete Data‑flow Graph
 
-<img  width="885" height="655" src="https://github.com/mbalcerzak/GraphShiny/blob/master/img/shiny_graph.png">
+When the app starts, it shows the full lineage across all datasets:
 
-## Graph showing connections only for SDTM.MM
+<img  width="885" height="655" src="https://github.com/JoshAdekeye/RShiny-Projects/blob/master/img/data_flow.png">
 
-Selecting a single node makes graph filter underlying dataset and show connections only for that dataset. It also outputs a reactive table where we can see the relations in a tabular form. User can download the dataset any time.
+### Focused View – *SDTM.MM*
 
-<img  width="743" height="611" src="https://github.com/mbalcerzak/GraphShiny/blob/master/img/shiny_graph_mm.png">
+Selecting a node filters the graph to that dataset’s direct relationships. A reactive table lists the same information and can be downloaded.
 
+<img  width="743" height="611" src="https://github.com/JoshAdekeye/RShiny-Projects/blob/master/img/shiny_graph.png">
 
-## Flow of data going into the Shiny App
+### End‑to‑End Pipeline into Shiny
 
-<img  width="920" height="760" src="https://github.com/mbalcerzak/GraphShiny/blob/master/img/data_flow.png">
+<img  width="920" height="760" src="https://github.com/JoshAdekeye/RShiny-Projects/blob/master/img/shiny_graph_mm.png">
