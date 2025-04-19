@@ -11,7 +11,8 @@ The flow of clinical trials data can quickly become complicated. The dashboard p
 - making sure all raw datasets are necessary and used on the study  
 - checking if the actual data flow is in accordance with specification and industry/company standards
 - comparing inputs between main and QC programs  
-- making sure we have all the datasets necessary to create each domain
+- making sure w![Picture1](https://github.com/user-attachments/assets/34808b7c-f928-4ab4-9954-e14374b0f35c)
+e have all the datasets necessary to create each domain
   
 
 ## How it is built
